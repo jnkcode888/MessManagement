@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2 style="margin-top: 100px">Menu</h2>
+<div>
+    {% if foods %}
+        <p>Foods are available:</p>
+    {% else %}
+        <p>No foods available</p>
+    {% endif %}
+</div>
+
+<div class="row">
+   {% for food in foods %}
+    <div class="col-lg-4 col-12 mb-3">
+        <div class="product-card">
+            <img src="{{ food.image.url }}" class="img-fluid product-image" alt="{{ food.name }}">
+            <div class="product-details">
+                <h5 class="product-title">{{ food.name }}</h5>
+                <p class="product-description">{{ food.description }}</p>
+                <small class="product-price">${{ food.price }}</small>
+                <form method="POST" action="javascript:void(0)" onsubmit="addToCart({{ food.id }}, '{{ food.name }}', {{ food.price }})">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+   {% endfor %}
+</div>
+
+<!-- View Cart Button -->
+<a href="{% url 'view_cart' %}" class="btn btn-secondary mt-3">View Cart</a>
+
+<!-- Move the script to the end of the block and wrap in a script tag -->
+<script>
+    const cartKey = 'cart';
+
+    // Add to Cart functionality
+    function addToCart(id, name, price) {
+        let cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+        const found = cart.find(item => item.id === id);
+
+        if (found) {
+            found.quantity += 1;
+        } else {
+            cart.push({ id, name, price, quantity: 1 });
+        }
+
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        alert(`${name} has been added to your cart!`);
+    }
+</script>
+{% endblock %}

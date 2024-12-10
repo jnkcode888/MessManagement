@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Your Cart</h2>
+                </div>
+                <div class="card-body">
+                    <div id="cart-items" class="cart-items">
+                        <!-- Cart items will be dynamically populated here -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h3 class="mb-0">Total: $<span id="cart-total">0.00</span></h3>
+                        <div>
+                            <button id="clear-cart" class="btn btn-danger me-2">
+                                <i class="fas fa-trash"></i> Clear Cart
+                            </button>
+                            <button id="checkout-btn" class="btn btn-success">
+                                <i class="fas fa-shopping-cart"></i> Checkout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div id="checkout-form-container" style="display:none;">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h3 class="mb-0">Checkout Details</h3>
+                    </div>
+                    <div class="card-body">
+                        <form id="order-form">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone"
+                                       pattern="254[0-9]{9}"
+                                       placeholder="254712345678"
+                                       required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email (Optional)</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="fas fa-money-check"></i> Place Order
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<style>
+    .cart-items {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    .cart-item {
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+    }
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const cartKey = 'cart';
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    const clearCartButton = document.getElementById('clear-cart');
+    const checkoutButton = document.getElementById('checkout-btn');
+    const checkoutFormContainer = document.getElementById('checkout-form-container');
+    const orderForm = document.getElementById('order-form');
+
+    function displayCartItems() {
+        const cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+        let totalPrice = 0;
+
+        cartItemsContainer.innerHTML = '';
+
+        if (cart.length === 0) {
+            cartItemsContainer.innerHTML = '<p class="text-center text-muted">Your cart is empty</p>';
+            cartTotalElement.textContent = '0.00';
+            checkoutButton.disabled = true;
+            return;
+        }
+
+        checkoutButton.disabled = false;
+
+        cart.forEach(item => {
+            const itemTotal = item.price * item.quantity;
+            totalPrice += itemTotal;
+            const cartItemElement = document.createElement('div');
+            cartItemElement.classList.add('cart-item', 'd-flex', 'justify-content-between', 'align-items-center');
+            cartItemElement.innerHTML = `
+                <div>
+                    <h5 class="mb-1">${item.name}</h5>
+                    <p class="mb-1">Price: $${item.price} | Quantity: ${item.quantity}</p>
+                    <p class="mb-0">Subtotal: $${itemTotal.toFixed(2)}</p>
+                </div>
+                <div>
+                    <button onclick="updateQuantity(${item.id}, 1)" class="btn btn-sm btn-success">+</button>
+                    <button onclick="updateQuantity(${item.id}, -1)" class="btn btn-sm btn-warning">-</button>
+                    <button onclick="removeItem(${item.id})" class="btn btn-sm btn-danger">Remove</button>
+                </div>
+            `;
+            cartItemsContainer.appendChild(cartItemElement);
+        });
+
+        cartTotalElement.textContent = totalPrice.toFixed(2);
+    }
+
+    window.updateQuantity = function(id, change) {
+        let cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+        const itemIndex = cart.findIndex(item => item.id === id);
+
+        if (itemIndex !== -1) {
+            cart[itemIndex].quantity += change;
+
+            if (cart[itemIndex].quantity <= 0) {
+                cart.splice(itemIndex, 1);
+            }
+
+            localStorage.setItem(cartKey, JSON.stringify(cart));
+            displayCartItems();
+        }
+    }
+
+    window.removeItem = function(id) {
+        let cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+        cart = cart.filter(item => item.id !== id);
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+        displayCartItems();
+    }
+
+    clearCartButton.addEventListener('click', function() {
+        localStorage.removeItem(cartKey);
+        displayCartItems();
+    });
+
+    checkoutButton.addEventListener('click', function() {
+        const cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+        if (cart.length === 0) {
+            alert('Your cart is empty');
+            return;
+        }
+
+        // Show checkout form
+        checkoutFormContainer.style.display = 'block';
+    });
+
+    orderForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const totalPrice = parseFloat(cartTotalElement.textContent);
+
+        const orderData = {
+            name: name,
+            phone: phone,
+            email: email,
+            total_price: totalPrice,
+            cart_items: cart
+        };
+
+        // Send order to backend
+        fetch('/process-order/', {  // Replace with your actual endpoint
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(orderData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Placeholder for M-Pesa STK Push integration
+            // TODO: Integrate M-Pesa STK Push here
+            // Example:
+            // window.location.href = data.mpesa_stk_push_url;
+
+            alert('Order placed successfully! Proceed to payment.');
+            localStorage.removeItem(cartKey);
+            displayCartItems();
+            checkoutFormContainer.style.display = 'none';
+        })
+        .catch(error => {
+            console.error('Order submission error:', error);
+            alert('Failed to place order. Please try again.');
+        });
+    });
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Initial display
+    displayCartItems();
+});
+</script>
+{% endblock %}

@@ -1,0 +1,368 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <meta name="description" content="University Mess Management System">
+        <meta name="author" content="">
+
+        <title>University Mess Management</title>
+
+        <!-- CSS FILES -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+        <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+        <link href="{% static 'css/bootstrap-icons.css' %}" rel="stylesheet">
+
+        <link rel="stylesheet" href="{% static 'css/slick.css' %}"/>
+
+        <link href="{% static 'css/tooplate-little-fashion.css' %}" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <section class="preloader">
+            <div class="spinner">
+                <span class="sk-inner-circle"></span>
+            </div>
+        </section>
+
+        <main>
+
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="{% url 'index' %}">
+                        <strong><span>Mess</span> Management</strong>
+                    </a>
+
+                    <div class="d-lg-none">
+                        <a href="{% url 'signin' %}" class="bi-person custom-icon me-3"></a>
+
+                        <a href="{% url 'orders' %}" class="bi-bag custom-icon"></a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="{% url 'index' %}">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'menus' %}">Menu</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'about' %}">About</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'faq' %}">FAQs</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'contact' %}">Contact</a>
+                            </li>
+                        </ul>
+
+                        <div class="d-none d-lg-block">
+                            <a href="{% url 'signin' %}" class="bi-person custom-icon me-3"></a>
+
+                            <a href="orders.html" class="bi-bag custom-icon"></a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        
+            <header class="site-header section-padding-img site-header-image">
+                <div class="container">
+                    <div class="row">
+        
+                        <div class="col-lg-6 col-12 header-info">
+                            <h1>
+                                <span class="d-block text-primary">Mess</span>
+                                <span class="d-block text-dark">Management System</span>
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+        
+                <img src="{% static 'images/header/head.jpg' %}" class="header-image img-fluid" alt="">
+            </header>
+        
+            <section class="team section-padding">
+                <div class="container">
+                    <div class="row">
+        
+                        <div class="col-12">
+                            <h2 class="mb-5">Meet our <span>team</span></h2>
+                        </div>
+        
+                        <div class="col-lg-4 mb-4 col-12">
+                            <div class="team-thumb d-flex align-items-center">
+                                <img src="{% static 'images/people/pp1.jpg' %}" class="img-fluid custom-circle-image team-image me-4" alt="">
+        
+                                <div class="team-info">
+                                    <h5 class="mb-0">John Doe</h5>
+                                    <strong class="text-muted">Mess Manager</strong>
+        
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn custom-modal-btn" data-bs-toggle="modal" data-bs-target="#john">
+                                        <i class="bi-plus-circle-fill"></i>
+                                    </button>
+        
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-4 mb-4 col-12">
+                            <div class="team-thumb d-flex align-items-center">
+                                <img src="{% static 'images/people/pp2.jpg' %}" class="img-fluid custom-circle-image team-image me-4" alt="">
+        
+                                <div class="team-info">
+                                    <h5 class="mb-0">Jane Smith</h5>
+                                    <strong class="text-muted">Customer Support</strong>
+        
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn custom-modal-btn" data-bs-toggle="modal" data-bs-target="#jane">
+                                        <i class="bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <div class="col-lg-4 mb-lg-0 mb-4 col-12">
+                            <div class="team-thumb d-flex align-items-center">
+                                <img src="{% static 'images/people/pp3.jpg' %}" class="img-fluid custom-circle-image team-image me-4" alt="">
+        
+                                <div class="team-info">
+                                    <h5 class="mb-0">Marie Johnson</h5>
+                                    <strong class="text-muted">Founder</strong>
+        
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn custom-modal-btn" data-bs-toggle="modal" data-bs-target="#marie">
+                                        <i class="bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </section>
+        
+            <section class="testimonial section-padding">
+                <div class="container">
+                    <div class="row">
+        
+                        <div class="col-lg-9 mx-auto col-11">
+                            <h2 class="text-center">Customer Feedback, <br> <span>Mess Management System</span></h2>
+        
+                            <div class="slick-testimonial">
+                                <div class="slick-testimonial-caption">
+                                    <p class="lead">Our students and staff love the easy access to meals and efficient service provided by our Mess Management System. It keeps everything organized and streamlined.</p>
+        
+                                    <div class="slick-testimonial-client d-flex align-items-center mt-4">
+                                        <img src="{% static 'images/people/pp3.jpg' %}" class="img-fluid custom-circle-image me-3" alt="">
+        
+                                        <span>George, <strong class="text-muted">University Staff</strong></span>
+                                    </div>
+                                </div>
+        
+                                <div class="slick-testimonial-caption">
+                                    <p class="lead">The meal selection is easy to navigate, and the system ensures no delays. It's a game-changer for our campus.</p>
+        
+                                    <div class="slick-testimonial-client d-flex align-items-center mt-4">
+                                        <img src="{% static 'images/people/pp4.jpg' %}" class="img-fluid custom-circle-image me-3" alt="">
+        
+                                        <span>Sandar, <strong class="text-muted">Student</strong></span>
+                                    </div>
+                                </div>
+        
+                                <div class="slick-testimonial-caption">
+                                    <p class="lead">The app ensures I get notified for my meal choices, helping me plan my day better.</p>
+        
+                                    <div class="slick-testimonial-client d-flex align-items-center mt-4">
+                                        <img src="{% static 'images/people/pp5.jpeg' %}" class="img-fluid custom-circle-image me-3" alt="">
+        
+                                        <span>Marie, <strong class="text-muted">Student</strong></span>
+                                    </div>
+                                </div>
+        
+                                <div class="slick-testimonial-caption">
+                                    <p class="lead">A truly smooth process to order food, receive notifications, and make payments without any hassles!</p>
+        
+                                    <div class="slick-testimonial-client d-flex align-items-center mt-4">
+                                        <img src="{% static 'images/people/pp6.jpg' %}" class="img-fluid custom-circle-image me-3" alt="">
+        
+                                        <span>Catherine, <strong class="text-muted">University Staff</strong></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        
+                    </div>
+                </div>
+            </section>
+        
+        </main>
+        
+         <footer class="site-footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-3 col-10 me-auto mb-4">
+                        <h4 class="text-white mb-3"><a href="{% url 'index' %}">Mess</a> Management</h4>
+                        <p class="copyright-text text-muted mt-lg-5 mb-4 mb-lg-0">Copyright © 2024 <strong>University Mess Management</strong></p>
+                        <br>
+                        <p class="copyright-text">Designed by SolTech Solutions</p>
+                    </div>
+
+                    <div class="col-lg-5 col-8">
+                        <h5 class="text-white mb-3">Sitemap</h5>
+
+                        <ul class="footer-menu d-flex flex-wrap">
+                            <li class="footer-menu-item"><a href="{% url 'about' %}" class="footer-menu-link">Our Story</a></li>
+
+                            <li class="footer-menu-item"><a href="{% url 'faq' %}" class="footer-menu-link">Privacy policy</a></li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'orders' %}">Orders</a>
+                            </li>
+
+                            <li class="footer-menu-item"><a href="{% url 'contact' %}" class="footer-menu-link">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-3 col-4">
+                        <h5 class="text-white mb-3">Social</h5>
+
+                        <ul class="social-icon">
+
+                            <li><a href="#" class="social-icon-link bi-youtube"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-skype"></a></li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </footer>
+
+        <!-- TEAM MEMBER MODAL -->
+        <div class="modal fade" id="don" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0">
+                    <div class="modal-header flex-column">
+                        <h3 class="modal-title" id="exampleModalLabel">Don Haruko</h3>
+
+                        <h6 class="text-muted">Product, VP</h6>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <h5 class="mb-4">Over three years in business had the chance to work on variety of projects, with companies</h5>
+
+
+
+                        <ul class="social-icon">
+                            <li class="me-3"><strong>Where to find?</strong></li>
+
+                            <li><a href="#" class="social-icon-link bi-youtube"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-whatsapp"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TEAM MEMBER MODAL -->
+        <div class="modal fade" id="kelly" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0">
+                    <div class="modal-header flex-column">
+                        <h3 class="modal-title" id="exampleModalLabel">Kelly Lisa</h3>
+
+                        <h6 class="text-muted">Global, Head of Marketing</h6>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <h5 class="mb-4">Over three years in business had the chance to work on variety of projects, with companies</h5>
+
+                        
+
+                        <ul class="social-icon">
+                            <li class="me-3"><strong>Where to find?</strong></li>
+
+                            <li><a href="#" class="social-icon-link bi-facebook"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-instagram"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- TEAM MEMBER MODAL -->
+        <div class="modal fade" id="marie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content border-0">
+                    <div class="modal-header flex-column">
+                        <h3 class="modal-title" id="exampleModalLabel">Marie Sam</h3>
+
+                        <h6 class="text-muted">Founder & CEO</h6>
+
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <h5 class="mb-4">Over three years in business had the chance to work on variety of projects, with companies</h5>
+
+                        
+
+                        <ul class="social-icon">
+                            <li class="me-3"><strong>Where to find?</strong></li>
+
+                            <li><a href="#" class="social-icon-link bi-twitter"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-linkedin"></a></li>
+
+                            <li><a href="#" class="social-icon-link bi-envelope"></a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- JAVASCRIPT FILES -->
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/Headroom.js' %}"></script>
+        <script src="{% static 'js/jQuery.headroom.js' %}"></script>
+        <script src="{% static 'js/slick.min.js' %}"></script>
+        <script src="{% static 'js/custom.js' %}"></script>
+
+    </body>
+</html>
